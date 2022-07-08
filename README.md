@@ -1,4 +1,4 @@
-# SofkaU-ReactivaYFuncional-Tarea1
+# SofkaU-ReactivaYFuncional-Calculadora con Stream
 Tarea Sofka U
 Se solicita crear una calculadora usando Stream,
 
