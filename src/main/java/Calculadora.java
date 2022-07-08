@@ -1,54 +1,94 @@
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
+
+
+/**
+ * Author Daniel Felipe Marin Giraldo
+ * v 1.0
+ * Clase calculadora que implementa los métodos sumar, restar, multiplicar,dividir y módulo, recibe 2 objetos tipo List
+ * para poder operar según el índice de cada arreglo
+ */
 public class Calculadora {
 
-    public Integer sumarListas (List<Integer> listaNumerosUno,List<Integer> listaNumerosDos){
-        Integer resultadoSumaUno = listaNumerosUno.stream().reduce((acumulador,numero)->{
-            return acumulador+numero;}).get();
 
-        Integer resultadoSumaDos = listaNumerosDos.stream().reduce((acumulador,numero)->{
-            return acumulador+numero;}).get();
+    public void sumar(List<Integer> listaNumerosUno, List<Integer> listaNumerosDos){
+        AtomicInteger indice = new AtomicInteger();
+        List<Integer> resultadoSuma = listaNumerosUno.stream().map((listaUno)->{
+                    Integer listaDos = listaNumerosDos.get(indice.get());
+                    indice.getAndIncrement();
+                    Integer operacionSuma = listaUno+listaDos;
+                    return operacionSuma;
+                }).collect(Collectors.toList());
+        System.out.println("\nEl vector resultado de la suma es: " + resultadoSuma.toString());
+    }
 
-        Integer resultadoSumaTotal = resultadoSumaUno+resultadoSumaDos;
 
-        return resultadoSumaTotal;
+    public void restar (List<Integer> listaNumerosUno,List<Integer> listaNumerosDos){
+        AtomicInteger indice = new AtomicInteger();
+        List<Integer> resultadoResta = listaNumerosUno.stream().map((listaUno)->{
+            Integer listaDos = listaNumerosDos.get(indice.get());
+            indice.getAndIncrement();
+            Integer operacionResta = listaUno-listaDos;
+                    return operacionResta;
+        }).collect(Collectors.toList());
+        System.out.println("El vector resultado de la resta es: " + resultadoResta.toString());
+    }
+
+    public void multiplicar(List<Integer> listaNumerosUno, List<Integer> listaNumerosDos){
+        AtomicInteger indice = new AtomicInteger();
+        List<Integer> resultadoMultiplicacion = listaNumerosUno.stream().map((listaUno)->{
+                    Integer listaDos = listaNumerosDos.get(indice.get());
+                    indice.getAndIncrement();
+                    Integer operacionMultiplicacion = listaUno*listaDos;
+                    return operacionMultiplicacion;
+                }).collect(Collectors.toList());
+        System.out.println("El vector resultado de la multiplicación es: " + resultadoMultiplicacion.toString());
 
     }
 
-    public Integer restarListas (List<Integer> listaNumerosUno,List<Integer> listaNumerosDos){
-        Integer resultadoRestaUno = listaNumerosUno.stream()
-                .reduce((acumulador, numero) -> acumulador - numero).get();
+    public void dividir (List<Integer> listaNumerosUno,List<Integer> listaNumerosDos){
+        AtomicInteger indice = new AtomicInteger();
+        List<Integer> resultadoDivision = listaNumerosUno.stream()
+                .map((listaUno)->{
+                    Integer listaDos = listaNumerosDos.get(indice.get());
+                    indice.getAndIncrement();
+                    Integer operacionDivision = listaUno/listaDos;
+                        return operacionDivision ;
+                }).collect(Collectors.toList());
+        System.out.println("El vector resultado de la división es: " + resultadoDivision.toString());
+    }
 
-        Integer resultadoRestaDos = listaNumerosDos.stream()
-                .reduce((acumulador, numero) -> acumulador - numero).get();
-
-        Integer resultadoRestaTotal = resultadoRestaUno-resultadoRestaDos;
-
-        return resultadoRestaTotal;
+    public void modulo(List<Integer> listaNumerosUno, List<Integer> listaNumerosDos){
+        AtomicInteger indice = new AtomicInteger();
+        List<Integer> resultadoModulo = listaNumerosUno.stream().map((listaUno)->{
+            Integer listaDos = listaNumerosDos.get(indice.get());
+            indice.getAndIncrement();
+            Integer operacionModulo = listaUno%listaDos;
+            return operacionModulo;
+        }).collect(Collectors.toList());
+        System.out.println("El vector resultado del módulo es: " + resultadoModulo.toString());
 
     }
 
-    public Integer multiplicarListas (List<Integer> listaNumerosUno,List<Integer> listaNumerosDos){
-        Integer resultadoMultiplicacionUno = listaNumerosUno.stream()
-                .reduce((acumulador, numero) -> acumulador * numero).get();
-        Integer resultadoMultiplicacionDos = listaNumerosDos.stream()
-                .reduce((acumulador, numero) -> acumulador * numero).get();
-        Integer resultadoMultiplicacionTotal = resultadoMultiplicacionUno*resultadoMultiplicacionDos;
-        return resultadoMultiplicacionTotal;
+    public Optional<Integer> calcularMaximo(List<Integer>listaNumerosUno) {
+        Optional<Integer> numeroMayor = listaNumerosUno.stream().max((x, y) -> x.compareTo(y));
+
+        return numeroMayor;
 
     }
 
-    public void dividirListas (List<Integer> listaNumerosUno,List<Integer> listaNumerosDos){
-        Integer resultadoDivisionUno = listaNumerosUno.stream()
-                .reduce((acumulador, numero) -> acumulador + numero).get();
-        Integer resultadoDivisionDos = listaNumerosDos.stream()
-                .reduce((acumulador, numero) -> acumulador + numero).get();
+    public Optional<Integer> calcularMinimo(List<Integer>listaNumerosDos) {
+        Optional<Integer> numeroMenor = listaNumerosDos.stream().min((x, y) -> x.compareTo(y));
 
-        if (resultadoDivisionDos==0){
-            System.out.println("No puedes dividir por cero");
-        } else{
-            double resultadoDivisionTotal = resultadoDivisionUno/resultadoDivisionDos;
-            System.out.println("El resultado de la división es: "+resultadoDivisionTotal);
-        }
+        return numeroMenor;
+
     }
+
+
+
+
+
 }
